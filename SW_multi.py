@@ -22,8 +22,10 @@ import seaborn as sns
 from tabulate import tabulate
 #pip install pandas
 import pandas as pd
+#pip install biopython
 from Bio.Seq import Seq
 from Bio.SeqUtils import gc_fraction, molecular_weight
+#pip install pyjokes
 import pyjokes
 
 ##################################################################################################################
