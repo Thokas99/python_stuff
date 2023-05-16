@@ -204,6 +204,8 @@ def print_matrix(matrix ,positions, seq_a, seq_b, threshold = 50, heatmap = True
     and provides an aesthetic message to indicate that the matrix is too long.
 
     Args:
+     - seq_a (str): Aligned sequence A.
+     - seq_b (str): Aligned sequence B.
      - matrix (numpy.ndarray): The matrix to be printed.
      - threshold (int): The maximum number of rows to be printed.
      - heatmap (bool): If True, plot a heatmap of the matrix using seaborn.
@@ -278,7 +280,7 @@ def generate_alignment_string(aligned_seq_a, aligned_seq_b):
     """
     Generates a string representing the alignment of two sequences.
 
-    Parameters:
+    Args:
      - aligned_seq_a (str): The first aligned sequence.
      - aligned_seq_b (str): The second aligned sequence.
 
@@ -320,9 +322,7 @@ def pretty_alignment(aligned_seq_a, aligned_seq_b, alignment_score):
     Args:
      - aligned_seq_a (str): Aligned sequence A.
      - aligned_seq_b (str): Aligned sequence B.
-     - alignment_score (list): List of alignment scores.
-     - movements (list): List of movements in the alignment matrix.
-     - positions (list): List of position visited though the traceback
+     - alignment_score (list): List of alignment scores
     """
 
     # Get alignment statistics
@@ -366,11 +366,12 @@ def matrix(seq_a, seq_b, match_score=3, gap_cost=2,mismatch = -3):
     """
     Create an alignment matrix for two input sequences.
 
-    Parameters:
+    Args:
      - seq_a (str): the first sequence to be aligned.
      - seq_b (str): the second sequence to be aligned.
      - match_score (int): the score for a match between two nucleotides (default is 3).
      - gap_cost (int): the penalty score for inserting a gap in the alignment (default is 2).
+     - mismatch (int): the penalty score for a mismatch in the aligment (default is -3)
 
     Returns:
      - np.ndarray: a 2D numpy array containing the alignment matrix.
@@ -401,9 +402,9 @@ def traceback(alignment_matrix, seq_a, seq_b, match_score=3, gap_cost=2, mismatc
      - alignment_matrix (numpy.ndarray): The alignment matrix.
      - seq_a (str): The first sequence.
      - seq_b (str): The second sequence.
-     - match_score (int, optional): The score for a match. Defaults to 3.
-     - gap_cost (int, optional): The cost for a gap. Defaults to 2.
-     - mismatch (int, optional): The score for a mismatch. Defaults to -3.
+     - match_score (int): the score for a match between two nucleotides (default is 3).
+     - gap_cost (int): the penalty score for inserting a gap in the alignment (default is 2).
+     - mismatch (int): the penalty score for a mismatch in the aligment (default is -3)
 
     Returns:
      - all_aligned_seq_a (defaultdict): A dictionary of all aligned sequences for seq_a.
@@ -484,10 +485,12 @@ def smith_waterman(seq_a, seq_b, match_score=3, gap_cost=2, mismatch = -3, ask =
     Args:
      - seq_a: the first input sequence
      - seq_b: the second input sequence
-     - match_score: the score assigned for a match between two characters (default=3)
-     - gap_cost: the score assigned for a gap (default=2)
+     - match_score (int): the score for a match between two nucleotides (default is 3).
+     - gap_cost (int): the penalty score for inserting a gap in the alignment (default is 2).
+     - mismatch (int): the penalty score for a mismatch in the aligment (default is -3)
      - ask: a boolean flag indicating whether to prompt the user to repeat the function (default=True)
-     - graphic: a boolean flag indicating whether to display a graphical representation of the alignment matrix (default=True)"""
+     - graphic: a boolean flag indicating whether to display a graphical representation of the alignment matrix (default=True)
+     """
 
     # Set seed
     np.random.seed(710)
