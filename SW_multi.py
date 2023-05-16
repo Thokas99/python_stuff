@@ -1,7 +1,7 @@
-# title: "Algorithms for Bioinformatics Project 2023"
-# version : 2.1v Multi-result
+# title: "Algorithms for Bioinformatics Project 2023, QCB, Unitn"
+# version : 2.3v Multi-result
 # author: "Thomas Sirchi"
-# date: "07/05/2023"
+# date: "16/05/2023"
 
 #Packages essential to the code:
 #pip install questionary
