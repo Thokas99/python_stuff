@@ -171,8 +171,8 @@ def input_stats(seq_a, seq_b):
     seq_b = Seq(seq_b.upper())
 
     # Calculate GC fraction for each sequence (0-1)
-    gc_a = round(GC(seq_a), 2)
-    gc_b = round(GC(seq_b), 2)
+    gc_a = round(gc_fraction(seq_a), 2)
+    gc_b = round(gc_fraction(seq_b), 2)
 
     # Calculate weight of the sequences
     weight_a = molecular_weight(seq_a, "DNA")
