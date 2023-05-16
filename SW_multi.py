@@ -157,19 +157,26 @@ def ask_to_repeat(seq_a, seq_b):
 
 #### PRINT ####
 
-def input_stats(seq_a,seq_b):
+def input_stats(seq_a, seq_b):
+    """
+    Calculates various statistics and displays information about the input sequences.
 
-    # Create Seq objects for each sequence
+    Args:
+        seq_a (str): The first DNA sequence.
+        seq_b (str): The second DNA sequence.
+    """
+
+    # Convert sequences to uppercase and create Seq objects
     seq_a = Seq(seq_a.upper())
     seq_b = Seq(seq_b.upper())
-    
-    # Calculate GC fraction for each sequence (0-1)
-    gc_a = round(gc_fraction(seq_a), 2)
-    gc_b = round(gc_fraction(seq_b), 2)
 
-    # Calculate weigt of the sequences
-    weigt_a = molecular_weight(seq_a, "DNA")
-    weigt_b = molecular_weight(seq_b, "DNA")
+    # Calculate GC fraction for each sequence (0-1)
+    gc_a = round(GC(seq_a), 2)
+    gc_b = round(GC(seq_b), 2)
+
+    # Calculate weight of the sequences
+    weight_a = molecular_weight(seq_a, "DNA")
+    weight_b = molecular_weight(seq_b, "DNA")
 
     # Calculate Hamming distance between sequences
     hamming_distance = sum(1 for a, b in zip(seq_a, seq_b) if a != b)
@@ -178,24 +185,25 @@ def input_stats(seq_a,seq_b):
     count_a = dict(zip(["A", "T", "C", "G"], [seq_a.count("A"), seq_a.count("T"), seq_a.count("C"), seq_a.count("G")]))
     count_b = dict(zip(["A", "T", "C", "G"], [seq_b.count("A"), seq_b.count("T"), seq_b.count("C"), seq_b.count("G")]))
 
+    # Prepare statistics for display
     stats = [
-        ['GC content of A',count_a["G"] + count_a["C"],f"{gc_a:.2f}%" ],
-        ['GC content of B',count_b["G"] + count_b["C"],f"{gc_b:.2f}%" ],
-        ["Weight of A", f"{weigt_a:.2f}g/mol", ""],
-        ["Weight of B", f"{weigt_b:.2f}g/mol", ""],
-        ['Hamming distance',hamming_distance,'']
+        ['GC content of A', count_a["G"] + count_a["C"], f"{gc_a:.2f}%"],
+        ['GC content of B', count_b["G"] + count_b["C"], f"{gc_b:.2f}%"],
+        ["Weight of A", f"{weight_a:.2f}g/mol", ""],
+        ["Weight of B", f"{weight_b:.2f}g/mol", ""],
+        ['Hamming distance', hamming_distance, '']
     ]
 
-    # Use the tabulate function to format the data and print it
+    # Print statistics using tabulate for a formatted table
     print("\nStatistics on the input sequences:")
-    print(tabulate(stats, numalign="center",tablefmt= "grid", headers=['Statistic', 'Count', 'Percentage']),"\n")
+    print(tabulate(stats, numalign="center", tablefmt="grid", headers=['Statistic', 'Count', 'Percentage']), "\n")
 
     # Create a pandas DataFrame to display nucleotide counts for each sequence
     data = {"Sequence A": count_a, "Sequence B": count_b}
     df = pd.DataFrame(data).transpose()
 
-    # Display results
-    print("Nucleotide counts:\n", tabulate(df,numalign="center",headers=["A","T","C","G"],tablefmt= "grid"),'\n')
+    # Display nucleotide counts using tabulate for a formatted table
+    print("Nucleotide counts:\n", tabulate(df, numalign="center", headers=["A", "T", "C", "G"], tablefmt="grid"), '\n')
 
 
 def print_matrix(matrix ,positions, seq_a, seq_b, threshold = 50, heatmap = True):
