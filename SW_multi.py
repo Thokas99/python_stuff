@@ -38,7 +38,7 @@ def is_valid_dna_sequence(sequence):
     """
     Check if a given DNA sequence contains only valid nucleotides (A, T, G, C).
 
-    Parameters:
+    Args:
      - sequence (str): the DNA sequence to be validated.
 
     Returns:
@@ -120,7 +120,7 @@ def ask_to_repeat(seq_a, seq_b):
     """
     Asks the user whether to run the Smith-Waterman function again, and whether to use new sequences.
 
-    Parameters:
+    args:
      - seq_a (str): The first sequence to be aligned.
      - seq_b (str): The second sequence to be aligned.
     """
