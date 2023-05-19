@@ -425,7 +425,7 @@ def traceback(alignment_matrix, seq_a, seq_b, match_score=3, gap_cost=2, mismatc
     max_value_index = np.argwhere(alignment_matrix >= np.amax(alignment_matrix))
     print("The max values in the matrix are at:\n", tabulate(max_value_index,numalign="center",tablefmt= "grid",headers= ("X","Y")),"\n")
     
-    # initialize , movement, score, positions lists, number of itarations (tmp), boolan for reaching the zero (remv)
+    # initialize number of itarations (tmp)
     tmp = 0
     #inizialize the dictionary to store multiple results
     all_aligned_seq_a = defaultdict()
