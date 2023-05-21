@@ -133,6 +133,7 @@ def ask_to_repeat(seq_a, seq_b):
 
         # If the user chooses to exit, break out of the loop
         if answer == 'No':
+            print("Thank you for using the Smith-Waterman algorithm script!!!")
             break
         elif answer == "Tell me a joke":
             print(pyjokes.get_joke())
