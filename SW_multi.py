@@ -188,16 +188,19 @@ def input_stats(seq_a, seq_b):
 
     # Prepare statistics for display
     stats = [
-        ['GC content of A', count_a["G"] + count_a["C"], f"{gc_a:.2f}%"],
-        ['GC content of B', count_b["G"] + count_b["C"], f"{gc_b:.2f}%"],
-        ["Weight of A", f"{weight_a:.2f}g/mol", ""],
-        ["Weight of B", f"{weight_b:.2f}g/mol", ""],
-        ['Hamming distance', hamming_distance, '']
-    ]
+        ['GC content of A', count_a["G"] + count_a["C"], f"{gc_a}"],
+        ['GC content of B', count_b["G"] + count_b["C"], f"{gc_b}"]]
+
+    stats_2 =[
+        ["Weight of A", f"{weight_a:.2f}g/mol"],
+        ["Weight of B", f"{weight_b:.2f}g/mol"],
+        ['Hamming distance', hamming_distance,]]
+   
 
     # Print statistics using tabulate for a formatted table
     print("\nStatistics on the input sequences:")
-    print(tabulate(stats, numalign="center", tablefmt="grid", headers=['Statistic', 'Count', 'Percentage']), "\n")
+    print(tabulate(stats, numalign="center", tablefmt="grid", headers=['Statistic', 'Count', 'GC fraction (0-1)']), "\n")
+    print(tabulate(stats_2, numalign="center", tablefmt="grid", headers=['Statistic', 'Count']), "\n")
 
     # Create a pandas DataFrame to display nucleotide counts for each sequence
     data = {"Sequence A": count_a, "Sequence B": count_b}
