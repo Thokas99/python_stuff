@@ -143,14 +143,14 @@ def ask_to_repeat(seq_a, seq_b):
 
             # If the user chooses to use the same sequences, run the function again with the same inputs
             if answer2 == 'No':
-                smith_waterman(seq_a, seq_b)
+                smith_waterman(seq_a, seq_b,user_input = False)
                 break
 
             # If the user chooses to use new sequences, ask for the new sequences and run the function again with the new inputs
             elif answer2 == 'Yes':
                 new_seq_a = questionary.autocomplete("Enter a new sequence a or chose a demo:", choices=["ATCGCTAGCG","AGTTCGCTGA","GCTAGCTAGC","ATGCTAGCTA","CTAGCTGAGC"]).ask()
                 new_seq_b = questionary.autocomplete("Enter a new sequence b or chose a demo:", choices=["ATCGCTAGCG","AGTTCGCTGA","GCTAGCTAGC","ATGCTAGCTA","CTAGCTGAGC"]).ask()
-                smith_waterman(new_seq_a, new_seq_b)
+                smith_waterman(new_seq_a, new_seq_b,user_input = False)
                 break
 
 ##################################################################################################################
@@ -327,7 +327,7 @@ def generate_alignment_string(aligned_seq_a, aligned_seq_b):
     return visual_alig, idents, gaps, mismatches
 
 
-def pretty_alignment(aligned_seq_a, aligned_seq_b, alignment_score):
+def pretty_alignment(seq_a,seq_b,aligned_seq_a, aligned_seq_b, alignment_score):
     """
     Print a pretty alignment of two sequences and related statistics.
     
@@ -489,7 +489,7 @@ def traceback(alignment_matrix, seq_a, seq_b, match_score=3, gap_cost=2, mismatc
     return all_aligned_seq_a, all_aligned_seq_b, plot_positions,max_scores
 
 
-def smith_waterman(seq_a, seq_b, match_score=3, gap_cost=2, mismatch = -3, ask = True, graphic=True):
+def smith_waterman(seq_a="", seq_b="", match_score=3, gap_cost=2, mismatch = -3,user_input = True, ask = True, graphic=True):
     """
     The function smith_waterman performs the Smith-Waterman algorithm for local sequence alignment between two input sequences. 
     The algorithm generates an alignment matrix based on the match_score and gap_cost parameters, and then performs a traceback to find the optimal alignment.
@@ -500,12 +500,23 @@ def smith_waterman(seq_a, seq_b, match_score=3, gap_cost=2, mismatch = -3, ask =
      - match_score (int): the score for a match between two nucleotides (default is 3).
      - gap_cost (int): the penalty score for inserting a gap in the alignment (default is 2).
      - mismatch (int): the penalty score for a mismatch in the aligment (default is -3)
+     - user_input: a boolean flag indicating whether to prompt the user to ask the sequences (default=True)
      - ask: a boolean flag indicating whether to prompt the user to repeat the function (default=True)
      - graphic: a boolean flag indicating whether to display a graphical representation of the alignment matrix (default=True)
      """
+    
+
+    print(tabulate([["Welcome to the Smith-Waterman algorithm!"], 
+              ["This algorithm is named after Smith and Waterman, who developed it."],
+              ["Thomas Sirchi has written the code for this script."]], tablefmt="simple_grid"))
 
     # Set seed
     np.random.seed(710)
+
+    #ask for the sequances
+    if user_input:
+        seq_a = questionary.autocomplete("Enter a sequence A or chose a demo:", choices=["ATCGCTAGCG","AGTTCGCTGA","GCTAGCTAGC","ATGCTAGCTA","CTAGCTGAGC","TGTTACGGAG","GGTTGACTAT"]).ask()
+        seq_b = questionary.autocomplete("Enter a sequence B or chose a demo:", choices=["ATCGCTAGCG","AGTTCGCTGA","GCTAGCTAGC","ATGCTAGCTA","CTAGCTGAGC","TGTTACGGAG","GGTTGACTAT"]).ask()
 
     # Check the input
     true_seq_a, true_seq_b = Input_check(seq_a, seq_b)
@@ -514,7 +525,7 @@ def smith_waterman(seq_a, seq_b, match_score=3, gap_cost=2, mismatch = -3, ask =
     true_seq_a, true_seq_b = true_seq_a.upper(), true_seq_b.upper()
 
     # Print stats
-    input_stats(seq_a,seq_b)
+    input_stats(true_seq_a,true_seq_b)
 
     # Calculate the alignment matrix
     alignment_matrix = matrix(true_seq_a, true_seq_b, match_score, gap_cost, mismatch)
@@ -524,7 +535,7 @@ def smith_waterman(seq_a, seq_b, match_score=3, gap_cost=2, mismatch = -3, ask =
     
     for i in list(max_score.keys()):
         print(f"\n{i}° aligment possible between the sequences ####\n")
-        pretty_alignment(aligned_seq_a[i],aligned_seq_b[i],max_score[i])
+        pretty_alignment(true_seq_a,true_seq_b,aligned_seq_a[i],aligned_seq_b[i],max_score[i])
 
     # Print the alignment matrix if graphic=True to help visualize the alignment
     if graphic:
@@ -532,15 +543,9 @@ def smith_waterman(seq_a, seq_b, match_score=3, gap_cost=2, mismatch = -3, ask =
 
     # Ask the user whether to terminate or run the function again
     if ask:
-        ask_to_repeat(seq_a, seq_b)
+        ask_to_repeat(true_seq_a, true_seq_b)
     
 ##################################################################################################################   
 ##################################################################################################################
 
-#seq_a , seq_b = 'TTGGAAAATTGGAAAATTGGAAAATT','TTGGCCCCTTGGCCCCTTGGCCCCTT'
-seq_a , seq_b = 'TGTTACGG','GGTTGACTA'
-#seq_a , seq_b = "gggggccgcgggggccgcgg" , "gggggaagagggggaagagg"
-#seq_a , seq_b = "TTTTTTGGGGGGAAAAAAGGGGGGGTTTT" ,"TTTTTTCCCCCCAAAAAACCCCCCCTTTT"
-#seq_a , seq_b = "aaagtcgactggtgc", "tcgagcgtagggtac"
-#seq_a , seq_b = analyze_fasta_file(file1), analyze_fasta_file(file2)
-smith_waterman(seq_a, seq_b, ask= True, mismatch=-3)
+smith_waterman()
